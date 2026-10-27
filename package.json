@@ -1,0 +1,50 @@
+{
+	"name": "wts-bizmine",
+	"version": "0.0.1",
+	"description": "Bizmine WTS",
+	"productName": "Bizmine_WTS",
+	"private": true,
+	"scripts": {
+		"dev": "vite",
+		"build": "vue-tsc -b && vite build",
+		"preview": "vite preview",
+		"lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs --fix --ignore-path .gitignore",
+		"format": "prettier --write src/"
+	},
+	"dependencies": {
+		"@ckeditor/ckeditor5-build-classic": "^38.1.0",
+		"@ckeditor/ckeditor5-vue": "^5.1.0",
+		"axios": "^1.8.4",
+		"dayjs": "^1.11.13",
+		"echarts": "^5.6.0",
+		"lodash": "^4.17.21",
+		"prettier": "^3.0.0",
+		"sass": "^1.26.5",
+		"sass-loader": "^8.0.2",
+		"vee-validate": "^4.15.0",
+		"vue": "^3.3.4",
+		"vue-good-table-next": "^0.2.2",
+		"vue-loading-overlay": "^6.0.6",
+		"vue-router": "^4.2.4",
+		"vue-sweetalert2": "^5.0.11",
+		"vue-tsc": "^2.2.10",
+		"vuex": "^4.0.2",
+		"yup": "^1.6.1"
+	},
+	"devDependencies": {
+		"@types/lodash": "^4.17.16",
+		"@vitejs/plugin-vue": "^4.2.3",
+		"@vue/eslint-config-prettier": "^7.1.0",
+		"eslint": "^8.44.0",
+		"eslint-config-airbnb-base": "^15.0.0",
+		"eslint-import-resolver-alias": "^1.1.2",
+		"eslint-plugin-import": "^2.27.5",
+		"eslint-plugin-vue": "^9.15.1",
+		"rollup-plugin-obfuscator": "^1.1.0",
+		"terser": "^5.39.0",
+		"terser-webpack-plugin": "^5.3.14",
+		"vite": "^4.4.0",
+		"vite-plugin-compression": "^0.5.1",
+		"vite-tsconfig-paths": "^5.1.4"
+	}
+}
