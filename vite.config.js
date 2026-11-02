@@ -7,14 +7,14 @@ import { demoApiPlugin } from './plugins/demoApi.mjs'
 
 // https://vitejs.dev/config/
 // export default defineConfig({
-export default ({ mode }) => {
+export default ({ command, mode }) => {
   const env = loadEnv(mode, process.cwd());
   return defineConfig({
   plugins: [
     vue(),
     demoApiPlugin(), // 개발 서버 전용: 로컬 JSON 저장 샘플 API
     // rollup-plugin-obfuscator로 코드 난독화
-    obfuscator({ // default import로 호출
+    ...(command === 'build' ? [obfuscator({ // 운영 빌드에만 난독화 적용 (Vite 개발 모드의 동적 import 분석 보호)
       compact: true,
       controlFlowFlattening: true,
       deadCodeInjection: true,
@@ -33,7 +33,7 @@ export default ({ mode }) => {
       stringArrayEncoding: ['rc4'],
       target: 'browser',
       transformObjectKeys: false,
-    }),
+    })] : []),
     compression({ algorithm: 'gzip' }),
   ],
   resolve: {
