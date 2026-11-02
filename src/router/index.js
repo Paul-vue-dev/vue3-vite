@@ -63,6 +63,11 @@ const routes = [
     name: 'VeeValidateExam',
     component: VeeValidateExam,
   },
+  ...(import.meta.env.DEV ? [{
+    path: '/integration-lab',
+    name: 'IntegrationLab',
+    component: () => import('../views/IntegrationLab.vue'),
+  }] : []),
 ]
 
 const router = createRouter({

@@ -1,4 +1,5 @@
 import { createApp } from 'vue'
+import { VueQueryPlugin } from '@tanstack/vue-query'
 import router from '@/router'
 import App from '@/App.vue'
 import Loading from 'vue-loading-overlay'
@@ -15,6 +16,12 @@ import 'vue-good-table-next/dist/vue-good-table-next.css';
 const app = createApp(App)
 app.use(router)
 app.use(store)
+app.use(VueQueryPlugin, { queryClientConfig: {
+  defaultOptions: {
+    queries: { staleTime: 30_000, retry: 1, refetchOnWindowFocus: false },
+    mutations: { retry: 0 },
+  },
+} })
 app.use(globalProperties); // globalProperties 등록
 app.use(VueSweetalert2)
 
