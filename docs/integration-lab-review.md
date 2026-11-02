@@ -4,8 +4,8 @@
 
 ## 실습 방법
 1. Node.js 22, npm 10 환경을 권장한다(원본 README 기준).
-2. 이 브랜치에는 새 라이브러리 선언만 추가되어 있다. 네트워크가 되는 개발 PC에서 `npm install`을 수행하여 반드시 **package-lock.json도 갱신하고 커밋**해야 한다. 그 전에는 `npm ci`와 CI/build 수용을 PASS로 처리하지 않는다.
-3. `npm run test:demo-api` (Node 내장 테스트: 파일 저장, 재시작 후 조회, 동시 저장 테스트).
+2. `package-lock.json` 동기화 완료. `npm ci`로 재현 가능한 설치를 수행한다. GitHub Actions에서 동기화 후 `npm ci`, 로컬 저장소 테스트, `npm run build` 성공을 확인했다.
+3. `npm run test:demo-api` (Node 내장 테스트: 파일 저장·재시작 후 조회·동시 저장 및 Vite HTTP GET/POST 검사).
 4. `npm run dev` 실행, 브라우저에서 `http://localhost:8088/integration-lab` 접속.
 5. 제목과 수량 입력 → **API로 저장** → 리스트 자동 갱신 확인 → F5 후 데이터 유지 확인.
 6. 개발자 도구 Network에서 `POST /__demo/api/notes`와 `GET /__demo/api/notes` 확인. 제목 한 글자나 수량 0을 입력하면 Zod 검증 오류가 표시된다. **잘못된 응답 검사** 버튼은 의도적인 Zod 검증 실패를 표시하며 실제 서버 요청은 하지 않는다.
@@ -32,9 +32,11 @@
 - 실제 BACK API와 쿠키/세션 정책이 제공되기 전에는 인증 성공이나 운영 보안 검증으로 간주하지 않는다.
 
 ## 후속 수용 항목
-- [ ] 새 의존성 package-lock 동기화 + `npm ci` PASS
-- [ ] `npm run build` PASS, 기존 라우트 회귀 점검
-- [ ] 로컬 `test:demo-api` PASS
+- [x] 새 의존성 package-lock 동기화 + `npm ci` PASS (GitHub Actions, 2026-11-02)
+- [x] `npm run build` PASS (GitHub Actions)
+- [ ] 기존 라우트 브라우저 회귀 점검
+- [x] GitHub Actions의 `test:demo-api` PASS (파일 저장소 테스트)
+- [ ] Vite 개발 서버 HTTP API 통합 테스트 PASS (추가 검증 중)
 - [ ] 브라우저 POST/GET/F5 저장 확인 및 네트워크 응답 캡처
 - [ ] 기존 Vuex/SSO 상태 오류와 API 오류 처리 개선은 별도 변경으로 진행
 - [ ] WebSocket 서버 인터페이스/세션 API 계약 수립 후 실서버 연동 검증
