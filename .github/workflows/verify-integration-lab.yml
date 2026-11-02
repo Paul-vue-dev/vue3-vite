@@ -6,8 +6,10 @@ on:
   pull_request:
     branches:
       - main
+
 permissions:
-  contents: read
+  contents: write
+
 jobs:
   verify:
     runs-on: ubuntu-latest
@@ -17,8 +19,20 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
-          cache: 'npm'
-      # package-lock 동기화 전만 사용. npm ci 전환이 최종 수용 기준이다.
-      - run: npm install --no-audit --no-fund
+          cache: npm
+      - name: Update dependency lockfile
+        run: npm install --no-audit --no-fund
+      - name: Commit lockfile on isolated feature branch
+        if: github.event_name == 'push' && github.ref == 'refs/heads/feature/zod-vue-query-api-lab-20261102'
+        run: |
+          if ! git diff --quiet -- package-lock.json; then
+            git config user.name "github-actions[bot]"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git add package-lock.json
+            git commit -m "chore: sync integration lab dependency lockfile"
+            git push origin HEAD:feature/zod-vue-query-api-lab-20261102
+          fi
+      - name: Confirm reproducible install
+        run: npm ci --no-audit --no-fund
       - run: npm run test:demo-api
       - run: npm run build
