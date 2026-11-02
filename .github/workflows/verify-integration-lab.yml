@@ -1,0 +1,28 @@
+name: Vue Query integration lab validation
+on:
+  push:
+    branches:
+      - feature/zod-vue-query-api-lab-20261102
+  pull_request:
+    branches:
+      - main
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+      - name: Reproducible dependency install
+        run: npm ci --no-audit --no-fund
+      - name: Test real local GET/POST and file persistence
+        run: npm run test:demo-api
+      - name: Build
+        run: npm run build
