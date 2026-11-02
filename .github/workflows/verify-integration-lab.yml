@@ -1,0 +1,24 @@
+name: Vue Query integration lab validation
+on:
+  push:
+    branches:
+      - feature/zod-vue-query-api-lab-20261102
+  pull_request:
+    branches:
+      - main
+permissions:
+  contents: read
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: 'npm'
+      # package-lock 동기화 전만 사용. npm ci 전환이 최종 수용 기준이다.
+      - run: npm install --no-audit --no-fund
+      - run: npm run test:demo-api
+      - run: npm run build
